@@ -1,0 +1,1606 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 16,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "duplicate_media_discovery_risk",
+        "severity": "warning",
+        "message": "Detected 2 matching img entries with the same source/start/duration.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation."
+      },
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 582 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      },
+      {
+        "code": "timeline_track_too_dense",
+        "severity": "warning",
+        "message": "Track 1 has 11 timed elements in this HTML file. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move coherent scene groups into separate .html files under compositions/ and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"base\"> is a timeline element that contains nested <div id=\"bg\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#base",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"base\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"s1\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s1",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"s1\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"s2\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s2",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"s2\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"s3\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s3",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"s3\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"s4\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s4",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"s4\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"s5\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s5",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"s5\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"s6\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s6",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"s6\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"s7\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s7",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"s7\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"s8\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s8",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"s8\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"s9\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s9",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"s9\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"s10\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s10",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"s10\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"s11\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s11",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"s11\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"fx\"> is a timeline element that contains nested <div id=\"vignette\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#fx",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Testtest/reels/dark-attraction/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"fx\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 3,
+    "infoCount": 31,
+    "findings": [
+      {
+        "code": "escaped_container",
+        "severity": "warning",
+        "time": 8.12,
+        "selector": "#bokeh > div:nth-of-type(32)",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": 928.24,
+          "top": -116.84,
+          "right": 1058.59,
+          "bottom": 13.51,
+          "width": 130.35,
+          "height": 130.35
+        },
+        "containerSelector": "#bokeh",
+        "text": "",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 928.24,
+          "y": -116.84,
+          "width": 130.35,
+          "height": 130.35
+        },
+        "firstSeen": 8.12,
+        "lastSeen": 46.013,
+        "occurrences": 7,
+        "heldMs": 0,
+        "times": [
+          8.12,
+          18.947,
+          24.36,
+          29.773,
+          35.187,
+          40.6,
+          46.013
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "warning",
+        "time": 35.187,
+        "selector": "#bokeh > div:nth-of-type(25)",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": 117.77,
+          "top": -71.55,
+          "right": 189.41,
+          "bottom": 0.1,
+          "width": 71.64,
+          "height": 71.64
+        },
+        "containerSelector": "#bokeh",
+        "text": "",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 117.77,
+          "y": -71.55,
+          "width": 71.64,
+          "height": 71.64
+        },
+        "firstSeen": 35.187,
+        "lastSeen": 46.013,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          35.187,
+          46.013
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "warning",
+        "time": 40.6,
+        "selector": "#bokeh > div:nth-of-type(14)",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": 800.65,
+          "top": -143.57,
+          "right": 978.5,
+          "bottom": 34.28,
+          "width": 177.85,
+          "height": 177.85
+        },
+        "containerSelector": "#bokeh",
+        "text": "",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 800.65,
+          "y": -143.57,
+          "width": 177.85,
+          "height": 177.85
+        },
+        "firstSeen": 40.6,
+        "lastSeen": 46.013,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          40.6,
+          46.013
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 2.707,
+        "selector": "#s1-top > span:nth-of-type(1) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 292.83,
+          "top": 1064,
+          "right": 787.16,
+          "bottom": 1184,
+          "width": 494.33,
+          "height": 120
+        },
+        "containerSelector": "#vignette",
+        "text": "WANT HER",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 292.83,
+          "y": 1064,
+          "width": 494.33,
+          "height": 120
+        },
+        "firstSeen": 2.707,
+        "lastSeen": 2.707,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2.707
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 2.707,
+        "selector": "#s1-crazy",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 261.42,
+          "top": 1159,
+          "right": 818.56,
+          "bottom": 1439,
+          "width": 557.14,
+          "height": 280
+        },
+        "containerSelector": "#vignette",
+        "text": "Crazy",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 261.42,
+          "y": 1159,
+          "width": 557.14,
+          "height": 280
+        },
+        "firstSeen": 2.707,
+        "lastSeen": 2.707,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2.707
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 2.707,
+        "selector": "#s1-top > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 239.42,
+          "top": 1413.5,
+          "right": 840.56,
+          "bottom": 1533.5,
+          "width": 601.14,
+          "height": 120
+        },
+        "containerSelector": "#vignette",
+        "text": "ABOUT YOU?",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 239.42,
+          "y": 1413.5,
+          "width": 601.14,
+          "height": 120
+        },
+        "firstSeen": 2.707,
+        "lastSeen": 2.707,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2.707
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 2.707,
+        "selector": "#s1-img",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -92.54,
+          "top": -60.67,
+          "right": 1172.55,
+          "bottom": 1980.67,
+          "width": 1265.09,
+          "height": 2041.34
+        },
+        "containerSelector": "#s1 > div:nth-of-type(1) > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 92.54,
+          "right": 92.55,
+          "top": 60.67,
+          "bottom": 60.67
+        },
+        "dataAttributes": {
+          "data-hf-authored-opacity": ""
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -92.54,
+          "y": -60.67,
+          "width": 1265.09,
+          "height": 2041.34
+        },
+        "firstSeen": 2.707,
+        "lastSeen": 2.707,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2.707
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "info",
+        "time": 2.707,
+        "selector": "#bokeh > div:nth-of-type(5)",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": 966.9,
+          "top": 1872.33,
+          "right": 1112.25,
+          "bottom": 2017.68,
+          "width": 145.35,
+          "height": 145.35
+        },
+        "containerSelector": "#bokeh",
+        "text": "",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 966.9,
+          "y": 1872.33,
+          "width": 145.35,
+          "height": 145.35
+        },
+        "firstSeen": 2.707,
+        "lastSeen": 2.707,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2.707
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 13.533,
+        "selector": "#s3-word",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 79.14,
+          "top": 960,
+          "right": 1000.84,
+          "bottom": 1119,
+          "width": 921.7,
+          "height": 159
+        },
+        "containerSelector": "#vignette",
+        "text": "PSYCHOLOGY",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 79.14,
+          "y": 960,
+          "width": 921.7,
+          "height": 159
+        },
+        "firstSeen": 13.533,
+        "lastSeen": 13.533,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          13.533
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 13.533,
+        "selector": "span.g.g1",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 307.36,
+          "top": 1129,
+          "right": 792.63,
+          "bottom": 1331,
+          "width": 485.27,
+          "height": 202
+        },
+        "containerSelector": "#vignette",
+        "text": "HACK",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 307.36,
+          "y": 1129,
+          "width": 485.27,
+          "height": 202
+        },
+        "firstSeen": 13.533,
+        "lastSeen": 13.533,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          13.533
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 13.533,
+        "selector": "span.g.g2",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 288.36,
+          "top": 1129,
+          "right": 773.63,
+          "bottom": 1331,
+          "width": 485.27,
+          "height": 202
+        },
+        "containerSelector": "#vignette",
+        "text": "HACK",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 288.36,
+          "y": 1129,
+          "width": 485.27,
+          "height": 202
+        },
+        "firstSeen": 13.533,
+        "lastSeen": 13.533,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          13.533
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 13.533,
+        "selector": "#s3-hack > span:nth-of-type(3)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 297.36,
+          "top": 1129,
+          "right": 782.63,
+          "bottom": 1331,
+          "width": 485.27,
+          "height": 202
+        },
+        "containerSelector": "#vignette",
+        "text": "HACK",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 297.36,
+          "y": 1129,
+          "width": 485.27,
+          "height": 202
+        },
+        "firstSeen": 13.533,
+        "lastSeen": 13.533,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          13.533
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 18.947,
+        "selector": "#s4-num",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 271,
+          "top": 960,
+          "right": 809,
+          "bottom": 1297,
+          "width": 538,
+          "height": 337
+        },
+        "containerSelector": "#vignette",
+        "text": "90%",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 271,
+          "y": 960,
+          "width": 538,
+          "height": 337
+        },
+        "firstSeen": 18.947,
+        "lastSeen": 18.947,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          18.947
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 18.947,
+        "selector": "#s4-stat > span:nth-of-type(2) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 170.22,
+          "top": 1300,
+          "right": 909.78,
+          "bottom": 1384,
+          "width": 739.56,
+          "height": 84
+        },
+        "containerSelector": "#vignette",
+        "text": "OF GUYS MISS THEM",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 170.22,
+          "y": 1300,
+          "width": 739.56,
+          "height": 84
+        },
+        "firstSeen": 18.947,
+        "lastSeen": 18.947,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          18.947
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 18.947,
+        "selector": "#s4-img",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -457.81,
+          "top": -68.06,
+          "right": 1537.83,
+          "bottom": 1988.06,
+          "width": 1995.64,
+          "height": 2056.13
+        },
+        "containerSelector": "#s4 > div:nth-of-type(1) > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 457.81,
+          "right": 457.83,
+          "top": 68.06,
+          "bottom": 68.06
+        },
+        "dataAttributes": {
+          "data-hf-authored-opacity": ""
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -457.81,
+          "y": -68.06,
+          "width": 1995.64,
+          "height": 2056.13
+        },
+        "firstSeen": 18.947,
+        "lastSeen": 18.947,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          18.947
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 24.36,
+        "selector": "#s5-lockgrp > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 399.44,
+          "top": 962,
+          "right": 680.55,
+          "bottom": 1033,
+          "width": 281.11,
+          "height": 71
+        },
+        "containerSelector": "#vignette",
+        "text": "SECRET",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 399.44,
+          "y": 962,
+          "width": 281.11,
+          "height": 71
+        },
+        "firstSeen": 24.36,
+        "lastSeen": 24.36,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          24.36
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 24.36,
+        "selector": "#s5-lockgrp > span:nth-of-type(2) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 74.53,
+          "top": 1036,
+          "right": 1005.45,
+          "bottom": 1166,
+          "width": 930.92,
+          "height": 130
+        },
+        "containerSelector": "#vignette",
+        "text": "PSYCHOLOGICAL",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 74.53,
+          "y": 1036,
+          "width": 930.92,
+          "height": 130
+        },
+        "firstSeen": 24.36,
+        "lastSeen": 24.36,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          24.36
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 24.36,
+        "selector": "#s5-lockgrp > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 277.27,
+          "top": 1166.18,
+          "right": 802.72,
+          "bottom": 1368.18,
+          "width": 525.45,
+          "height": 202
+        },
+        "containerSelector": "#vignette",
+        "text": "TRICK",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 277.27,
+          "y": 1166.18,
+          "width": 525.45,
+          "height": 202
+        },
+        "firstSeen": 24.36,
+        "lastSeen": 24.36,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          24.36
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 24.36,
+        "selector": "#s5-lock > g:nth-of-type(1)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 430,
+          "top": 510.11,
+          "right": 650,
+          "bottom": 870,
+          "width": 220,
+          "height": 359.89
+        },
+        "containerSelector": "#s5-lock",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 390,
+          "top": 520,
+          "right": 690,
+          "bottom": 900,
+          "width": 300,
+          "height": 380
+        },
+        "overflow": {
+          "top": 9.89
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 430,
+          "y": 510.11,
+          "width": 220,
+          "height": 359.89
+        },
+        "firstSeen": 24.36,
+        "lastSeen": 24.36,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          24.36
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 29.773,
+        "selector": "#s7-dark",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 353.25,
+          "top": 600,
+          "right": 726.73,
+          "bottom": 759,
+          "width": 373.48,
+          "height": 159
+        },
+        "containerSelector": "#vignette",
+        "text": "DARK",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 353.25,
+          "y": 600,
+          "width": 373.48,
+          "height": 159
+        },
+        "firstSeen": 29.773,
+        "lastSeen": 29.773,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          29.773
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 29.773,
+        "selector": "#s7-psy",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 133.81,
+          "top": 759,
+          "right": 946.17,
+          "bottom": 900,
+          "width": 812.36,
+          "height": 141
+        },
+        "containerSelector": "#vignette",
+        "text": "PSYCHOLOGY",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 133.81,
+          "y": 759,
+          "width": 812.36,
+          "height": 141
+        },
+        "firstSeen": 29.773,
+        "lastSeen": 29.773,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          29.773
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 29.773,
+        "selector": "#s7-a > span:nth-of-type(3)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 268.59,
+          "top": 1332,
+          "right": 811.41,
+          "bottom": 1388,
+          "width": 542.81,
+          "height": 56
+        },
+        "containerSelector": "#vignette",
+        "text": "RESEARCH-BASED",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 268.59,
+          "y": 1332,
+          "width": 542.81,
+          "height": 56
+        },
+        "firstSeen": 29.773,
+        "lastSeen": 29.773,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          29.773
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 35.187,
+        "selector": "#s8-badge",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 262.94,
+          "top": 1042.53,
+          "right": 817.04,
+          "bottom": 1149.47,
+          "width": 554.1,
+          "height": 106.93
+        },
+        "containerSelector": "#vignette",
+        "text": "+ SECRET BONUS",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 262.94,
+          "y": 1042.53,
+          "width": 554.1,
+          "height": 106.93
+        },
+        "firstSeen": 35.187,
+        "lastSeen": 35.187,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          35.187
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "info",
+        "time": 35.187,
+        "selector": "#bokeh > div:nth-of-type(7)",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": -16.48,
+          "top": -141.88,
+          "right": 168.31,
+          "bottom": 42.91,
+          "width": 184.79,
+          "height": 184.79
+        },
+        "containerSelector": "#bokeh",
+        "text": "",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -16.48,
+          "y": -141.88,
+          "width": 184.79,
+          "height": 184.79
+        },
+        "firstSeen": 35.187,
+        "lastSeen": 35.187,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          35.187
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 40.6,
+        "selector": "#s10 > div:nth-of-type(1) > div:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 80.38,
+          "top": 1133,
+          "right": 999.63,
+          "bottom": 1232,
+          "width": 919.25,
+          "height": 99
+        },
+        "containerSelector": "#vignette",
+        "text": "THE WAY SHE SEES YOU",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 80.38,
+          "y": 1133,
+          "width": 919.25,
+          "height": 99
+        },
+        "firstSeen": 40.6,
+        "lastSeen": 40.6,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          40.6
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 40.6,
+        "selector": "#s10-img",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -187.02,
+          "top": -130.56,
+          "right": 1267.03,
+          "bottom": 2215.68,
+          "width": 1454.05,
+          "height": 2346.24
+        },
+        "containerSelector": "#s10 > div:nth-of-type(1) > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 187.02,
+          "right": 187.03,
+          "top": 130.56,
+          "bottom": 295.68
+        },
+        "dataAttributes": {
+          "data-hf-authored-opacity": ""
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -187.02,
+          "y": -130.56,
+          "width": 1454.05,
+          "height": 2346.24
+        },
+        "firstSeen": 40.6,
+        "lastSeen": 40.6,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          40.6
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 46.013,
+        "selector": "#s11-weapon",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 144.58,
+          "top": 923.73,
+          "right": 935.42,
+          "bottom": 987.73,
+          "width": 790.84,
+          "height": 64
+        },
+        "containerSelector": "#vignette",
+        "text": "YOUR SECRET WEAPON",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 144.58,
+          "y": 923.73,
+          "width": 790.84,
+          "height": 64
+        },
+        "firstSeen": 46.013,
+        "lastSeen": 46.013,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          46.013
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 46.013,
+        "selector": "#s11-btn > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 284.76,
+          "top": 1050.96,
+          "right": 903.86,
+          "bottom": 1143.5,
+          "width": 619.1,
+          "height": 92.53
+        },
+        "containerSelector": "#vignette",
+        "text": "DOWNLOAD NOW",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 284.76,
+          "y": 1050.96,
+          "width": 619.1,
+          "height": 92.53
+        },
+        "firstSeen": 46.013,
+        "lastSeen": 46.013,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          46.013
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 46.013,
+        "selector": "#s11-gone",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 255.02,
+          "top": 1221.71,
+          "right": 824.98,
+          "bottom": 1294.76,
+          "width": 569.96,
+          "height": 73.05
+        },
+        "containerSelector": "#vignette",
+        "text": "BEFORE IT'S GONE",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 255.02,
+          "y": 1221.71,
+          "width": 569.96,
+          "height": 73.05
+        },
+        "firstSeen": 46.013,
+        "lastSeen": 46.013,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          46.013
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 46.013,
+        "selector": "#s11-badges > div:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 117.89,
+          "top": 1407.73,
+          "right": 314.09,
+          "bottom": 1481.73,
+          "width": 196.2,
+          "height": 74
+        },
+        "containerSelector": "#vignette",
+        "text": "Instant Digital Access",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 117.89,
+          "y": 1407.73,
+          "width": 196.2,
+          "height": 74
+        },
+        "firstSeen": 46.013,
+        "lastSeen": 46.013,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          46.013
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 46.013,
+        "selector": "#s11-badges > div:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 442.39,
+          "top": 1407.73,
+          "right": 637.61,
+          "bottom": 1481.73,
+          "width": 195.22,
+          "height": 74
+        },
+        "containerSelector": "#vignette",
+        "text": "Step-by-Step Guide",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 442.39,
+          "y": 1407.73,
+          "width": 195.22,
+          "height": 74
+        },
+        "firstSeen": 46.013,
+        "lastSeen": 46.013,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          46.013
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 46.013,
+        "selector": "#s11-badges > div:nth-of-type(3)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 783.36,
+          "top": 1407.73,
+          "right": 944.64,
+          "bottom": 1481.73,
+          "width": 161.28,
+          "height": 74
+        },
+        "containerSelector": "#vignette",
+        "text": "Based on Psychology",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 783.36,
+          "y": 1407.73,
+          "width": 161.28,
+          "height": 74
+        },
+        "firstSeen": 46.013,
+        "lastSeen": 46.013,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          46.013
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 46.013,
+        "selector": "#s11-sheen",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 850,
+          "top": 112.67,
+          "right": 1010,
+          "bottom": 991.5,
+          "width": 160,
+          "height": 878.83
+        },
+        "containerSelector": "#s11-book",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 330,
+          "top": 238.22,
+          "right": 750,
+          "bottom": 865.95,
+          "width": 420,
+          "height": 627.73
+        },
+        "overflow": {
+          "right": 260,
+          "top": 125.55,
+          "bottom": 125.55
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 850,
+          "y": 112.67,
+          "width": 160,
+          "height": 878.83
+        },
+        "firstSeen": 46.013,
+        "lastSeen": 46.013,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          46.013
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "info",
+        "time": 46.013,
+        "selector": "#s11-sheen",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": 850,
+          "top": 112.67,
+          "right": 1010,
+          "bottom": 991.5,
+          "width": 160,
+          "height": 878.83
+        },
+        "containerSelector": "#s11-book",
+        "text": "",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 330,
+          "top": 238.22,
+          "right": 750,
+          "bottom": 865.95,
+          "width": 420,
+          "height": 627.73
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 850,
+          "y": 112.67,
+          "width": 160,
+          "height": 878.83
+        },
+        "firstSeen": 46.013,
+        "lastSeen": 46.013,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          46.013
+        ]
+      }
+    ],
+    "duration": 48.72,
+    "samples": [
+      2.707,
+      8.12,
+      13.533,
+      18.947,
+      24.36,
+      29.773,
+      35.187,
+      40.6,
+      46.013
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 34,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      2.707,
+      13.533,
+      24.36,
+      35.187,
+      46.013
+    ],
+    "checked": 17,
+    "passed": 17
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

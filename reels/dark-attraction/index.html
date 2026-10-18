@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>The Dark Attraction — Reel</title>
+    <script src="assets/lib/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Cinzel"; font-weight: 700; src: url("assets/fonts/cinzel-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Playfair Display"; font-weight: 800; src: url("assets/fonts/playfair-display-latin-800-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Playfair Display"; font-weight: 700; font-style: italic; src: url("assets/fonts/playfair-display-latin-700-italic.woff2") format("woff2"); }
+      @font-face { font-family: "Poppins"; font-weight: 500; src: url("assets/fonts/poppins-latin-500-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Poppins"; font-weight: 700; src: url("assets/fonts/poppins-latin-700-normal.woff2") format("woff2"); }
+
+      :root { --gold: #e9c67b; --gold-2: #b8862f; --red: #e3242b; --ink: #f6efe4; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #050304; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Poppins", sans-serif; color: var(--ink); }
+
+      /* shared layers */
+      .layer { position: absolute; inset: 0; }
+      #bg { background: radial-gradient(120% 70% at 50% 35%, #2a0709 0%, #120304 45%, #050304 100%); }
+      #bokeh .dot { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255,120,80,.55) 0%, rgba(255,60,40,.0) 70%); }
+      #grain { opacity: .09; mix-blend-mode: overlay; background-size: 256px 256px;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+      #vignette { background: radial-gradient(80% 60% at 50% 45%, rgba(0,0,0,0) 40%, rgba(0,0,0,.85) 100%); }
+      #leak { background: radial-gradient(40% 30% at 50% 50%, rgba(255,90,40,.55), rgba(255,90,40,0) 70%); mix-blend-mode: screen; opacity: 0; }
+      #flash { background: #fff3e0; opacity: 0; mix-blend-mode: screen; }
+
+      /* scenes */
+      .scene { position: absolute; inset: 0; }
+      .cam { position: absolute; inset: 0; }
+      .center { position: absolute; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
+      .w { display: inline-block; overflow: hidden; vertical-align: bottom; padding: 0 .06em; }
+      .w > span { display: inline-block; }
+      .line { display: block; white-space: nowrap; }
+      .cinzel { font-family: "Cinzel", serif; font-weight: 700; letter-spacing: .04em; }
+      .play { font-family: "Playfair Display", serif; font-weight: 800; }
+      .play-i { font-family: "Playfair Display", serif; font-weight: 700; font-style: italic; }
+      .gold { color: var(--gold); text-shadow: 0 0 40px rgba(233,198,123,.35), 0 4px 0 #6b4a14; }
+      .red { color: var(--red); text-shadow: 0 0 46px rgba(227,36,43,.55); }
+      .white { color: var(--ink); text-shadow: 0 6px 30px rgba(0,0,0,.8); }
+      .label { font-family: "Poppins", sans-serif; font-weight: 700; letter-spacing: .32em; font-size: 40px; color: var(--gold); }
+      .photo { position: absolute; left: 50%; top: 0; height: 100%; width: auto; }
+      .photo-wrap { position: absolute; inset: 0; overflow: hidden; display: flex; justify-content: center; }
+      .photo-wrap img { height: 100%; width: auto; display: block; }
+      .shade-bottom { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,3,4,0) 35%, rgba(5,3,4,.75) 62%, rgba(5,3,4,.96) 100%); }
+      .shade-all { position: absolute; inset: 0; background: rgba(5,3,4,.62); }
+      .icon { display: block; }
+      .icon * { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .card { width: 380px; height: 380px; border-radius: 40px; border: 3px solid rgba(233,198,123,.55); background: linear-gradient(160deg, rgba(60,14,16,.85), rgba(15,5,6,.9)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; position: relative; }
+      .card .cap { font-weight: 700; font-size: 40px; letter-spacing: .12em; color: var(--ink); }
+      .xmark { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+      .ring { position: absolute; left: 50%; top: 50%; width: 300px; height: 300px; margin: -150px 0 0 -150px; border-radius: 50%; border: 4px solid var(--gold); }
+      .phone { width: 470px; height: 860px; border-radius: 64px; border: 4px solid rgba(233,198,123,.7); background: linear-gradient(180deg, #17090a, #0b0506); position: relative; box-shadow: 0 0 80px rgba(227,36,43,.25); overflow: hidden; }
+      .notif { position: absolute; left: 26px; right: 26px; top: 60px; height: 120px; border-radius: 28px; background: rgba(246,239,228,.12); border: 2px solid rgba(233,198,123,.45); display: flex; align-items: center; gap: 20px; padding: 0 26px; }
+      .bubble { position: absolute; left: 30px; max-width: 360px; padding: 22px 30px; border-radius: 34px 34px 34px 8px; background: #2b1214; border: 2px solid rgba(233,198,123,.4); font-size: 36px; font-weight: 500; text-align: left; }
+      .inputbar { position: absolute; left: 26px; right: 26px; bottom: 40px; height: 96px; border-radius: 48px; border: 2px solid rgba(246,239,228,.25); display: flex; align-items: center; padding: 0 34px; font-size: 32px; color: rgba(246,239,228,.45); }
+      .book { width: 470px; display: block; border-radius: 6px; box-shadow: 0 40px 90px rgba(0,0,0,.8), 0 0 120px rgba(227,36,43,.35); }
+      .book-wrap { position: relative; width: 470px; overflow: hidden; border-radius: 6px; }
+      .sheen { position: absolute; top: -20%; bottom: -20%; width: 160px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,240,210,.65), rgba(255,255,255,0)); }
+      .btn { width: 780px; height: 156px; border-radius: 80px; background: linear-gradient(180deg, #ff3b3b, #b50f17); border: 4px solid var(--gold); display: flex; align-items: center; justify-content: center; gap: 28px; box-shadow: 0 0 60px rgba(227,36,43,.6), inset 0 4px 0 rgba(255,255,255,.25); position: relative; }
+      .btn span { font-weight: 700; font-size: 66px; letter-spacing: .04em; color: #fff; }
+      .ripple { position: absolute; width: 120px; height: 120px; border-radius: 50%; border: 6px solid #fff; left: 50%; top: 50%; margin: -60px 0 0 -60px; }
+      .badges { display: flex; gap: 24px; }
+      .badge { width: 300px; padding: 22px 16px; border-radius: 26px; border: 2px solid rgba(233,198,123,.45); background: rgba(20,6,7,.75); display: flex; flex-direction: column; align-items: center; gap: 12px; font-size: 28px; font-weight: 500; line-height: 1.25; color: var(--ink); }
+      .spark { position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: radial-gradient(circle, #fff6d8, #e9c67b 50%, rgba(233,198,123,0) 72%); }
+      .glitch { position: relative; display: inline-block; }
+      .glitch .g { position: absolute; left: 0; top: 0; }
+      #end-black { background: #000; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="1920" data-duration="48.72">
+
+      <!-- ===== shared background ===== -->
+      <div id="base" class="clip layer" data-start="0" data-duration="48.72" data-track-index="0">
+        <div id="bg" class="layer"></div>
+        <div id="leak" class="layer"></div>
+        <div id="bokeh" class="layer"></div>
+      </div>
+
+      <!-- ===== S1 HOOK 0–5.62 ===== -->
+      <section id="s1" class="scene clip" data-start="0" data-duration="5.62" data-track-index="1">
+        <div class="cam">
+          <div class="photo-wrap"><img id="s1-img" src="assets/img/her.png" alt="" /></div>
+          <div class="shade-bottom"></div>
+          <div id="s1-top" class="center" style="top: 1060px">
+            <span class="line"><span class="w"><span class="white" style="font-weight:700;font-size:86px;letter-spacing:.06em">WANT HER</span></span></span>
+            <span class="line"><span class="w"><span id="s1-crazy" class="play-i gold" style="font-size:210px;line-height:1.05">Crazy</span></span></span>
+            <span class="line"><span class="w"><span class="white" style="font-weight:700;font-size:86px;letter-spacing:.06em">ABOUT YOU?</span></span></span>
+          </div>
+          <div id="s1-love" class="center" style="top: 1120px">
+            <span class="line" style="position:relative"><span id="s1-loveword" class="play white" style="font-size:150px;display:inline-block">LOVE</span>
+              <svg id="s1-strike" class="icon" width="520" height="40" viewBox="0 0 520 40" style="position:absolute;left:50%;top:50%;margin:-20px 0 0 -260px"><path d="M10 26 L510 14" stroke="#e3242b" stroke-width="16" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+            </span>
+          </div>
+          <div id="s1-mind" class="center" style="top: 1110px">
+            <span class="line label" style="font-size:52px">PLAY THE</span>
+            <span class="line"><span id="s1-mindword" class="cinzel red" style="font-size:132px;display:inline-block">MIND GAME</span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== S2 NOT LUCK 5.62–9.30 ===== -->
+      <section id="s2" class="scene clip" data-start="5.62" data-duration="3.68" data-track-index="1">
+        <div class="cam">
+          <div id="s2-luck" class="center" style="top: 720px">
+            <span class="line label">IT'S NOT</span>
+            <span class="line" style="position:relative;margin-top:20px">
+              <span class="cinzel white" style="font-size:200px;display:inline-block">LUCK</span>
+              <svg class="icon" width="620" height="300" viewBox="0 0 620 300" style="position:absolute;left:50%;top:50%;margin:-150px 0 0 -310px"><path id="s2-slash" d="M40 260 L580 40" stroke="#e3242b" stroke-width="22" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+            </span>
+          </div>
+          <div id="s2-mind" class="center" style="top: 420px">
+            <svg id="s2-king" class="icon" width="300" height="420" viewBox="0 0 300 420">
+              <g stroke="#e9c67b" stroke-width="10">
+                <path pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" class="draw" d="M150 20 V80 M120 50 H180 M95 150 Q150 95 205 150 L190 270 H110 Z M80 300 H220 L240 350 H60 Z M40 395 H260"/>
+              </g>
+            </svg>
+            <span class="line label" style="margin-top:50px;font-size:56px">PURE</span>
+            <span class="line"><span id="s2-word" class="cinzel gold" style="font-size:150px;display:inline-block">MIND GAME</span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== S3 GYM / MONEY -> PSYCHOLOGY 9.30–14.42 ===== -->
+      <section id="s3" class="scene clip" data-start="9.30" data-duration="5.12" data-track-index="1">
+        <div class="cam">
+          <div id="s3-title" class="center" style="top: 330px">
+            <span class="line"><span class="w"><span class="cinzel white" style="font-size:96px">ATTRACTION</span></span></span>
+            <span class="line"><span class="w"><span class="label" style="font-size:44px">DOESN'T COME FROM</span></span></span>
+          </div>
+          <div id="s3-cards" class="center" style="top: 700px; flex-direction: row; justify-content: center; gap: 60px">
+            <div id="s3-gym" class="card">
+              <svg class="icon" width="200" height="120" viewBox="0 0 200 120"><g stroke="#e9c67b" stroke-width="10"><path d="M20 60 H180 M40 25 V95 M60 15 V105 M140 15 V105 M160 25 V95"/></g></svg>
+              <span class="cap">GYM BODY</span>
+              <div class="xmark"><svg class="icon" width="300" height="300" viewBox="0 0 300 300"><path class="xx" d="M60 60 L240 240 M240 60 L60 240" stroke="#e3242b" stroke-width="22" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg></div>
+            </div>
+            <div id="s3-money" class="card">
+              <svg class="icon" width="220" height="130" viewBox="0 0 220 130"><g stroke="#e9c67b" stroke-width="10"><rect x="10" y="15" width="200" height="100" rx="14"/><circle cx="110" cy="65" r="26"/><path d="M40 40 V90 M180 40 V90"/></g></svg>
+              <span class="cap">MONEY</span>
+              <div class="xmark"><svg class="icon" width="300" height="300" viewBox="0 0 300 300"><path class="xx" d="M60 60 L240 240 M240 60 L60 240" stroke="#e3242b" stroke-width="22" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg></div>
+            </div>
+          </div>
+          <div id="s3-psy" class="center" style="top: 560px">
+            <svg id="s3-brain" class="icon" width="420" height="360" viewBox="0 0 420 360">
+              <g stroke="#e9c67b" stroke-width="9">
+                <path class="draw" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" d="M205 40 C150 20 95 45 90 95 C45 105 30 160 60 195 C40 240 75 290 125 285 C140 320 190 330 205 300 Z"/>
+                <path class="draw" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" d="M215 40 C270 20 325 45 330 95 C375 105 390 160 360 195 C380 240 345 290 295 285 C280 320 230 330 215 300 Z"/>
+                <path class="draw" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" d="M110 150 C140 130 170 165 150 190 M300 140 C270 125 250 160 275 185 M160 240 C185 225 200 245 195 265 M255 235 C235 225 222 248 232 265"/>
+              </g>
+            </svg>
+            <span class="line" style="margin-top:40px"><span id="s3-word" class="cinzel gold" style="font-size:118px;display:inline-block">PSYCHOLOGY</span></span>
+            <span class="line" style="margin-top:10px">
+              <span id="s3-hack" data-layout-allow-overlap class="glitch cinzel" style="font-size:150px">
+                <span class="g g1" style="color:#00e5ff;opacity:.7">HACK</span>
+                <span class="g g2" style="color:#ff2d55;opacity:.7">HACK</span>
+                <span class="red" style="position:relative">HACK</span>
+              </span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== S4 HIDDEN SIGNALS 14.42–19.46 ===== -->
+      <section id="s4" class="scene clip" data-start="14.42" data-duration="5.04" data-track-index="1">
+        <div class="cam">
+          <div class="photo-wrap"><img id="s4-img" src="assets/img/him.png" alt="" style="filter: blur(6px) brightness(.55)" /></div>
+          <div class="shade-all"></div>
+          <div class="center" style="top: 380px; height: 520px; justify-content: center">
+            <div style="position:relative;width:520px;height:520px">
+              <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+              <svg id="s4-eye" class="icon" width="340" height="220" viewBox="0 0 340 220" style="position:absolute;left:90px;top:150px">
+                <g stroke="#e9c67b" stroke-width="12">
+                  <path class="draw" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" d="M20 110 C80 20 260 20 320 110 C260 200 80 200 20 110 Z"/>
+                  <circle class="draw" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" cx="170" cy="110" r="48"/>
+                </g>
+                <circle id="s4-pupil" cx="170" cy="110" r="20" style="fill:#e3242b;stroke:none"/>
+              </svg>
+            </div>
+          </div>
+          <div id="s4-text" class="center" style="top: 980px">
+            <span class="line"><span class="w"><span class="cinzel white" style="font-size:120px">HIDDEN</span></span></span>
+            <span class="line"><span class="w"><span class="cinzel gold" style="font-size:150px">SIGNALS</span></span></span>
+          </div>
+          <div id="s4-stat" class="center" style="top: 960px">
+            <span class="line"><span id="s4-num" class="cinzel red" style="font-size:250px;display:inline-block">0%</span></span>
+            <span class="line"><span class="w"><span class="white" style="font-weight:700;font-size:60px;letter-spacing:.14em">OF GUYS MISS THEM</span></span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== S5 NO TEXT -> SHE COMES / SECRET TRICK 19.46–24.88 ===== -->
+      <section id="s5" class="scene clip" data-start="19.46" data-duration="5.42" data-track-index="1">
+        <div class="cam">
+          <div id="s5-phonegrp" class="center" style="top: 300px">
+            <div class="phone">
+              <div id="s5-notif" class="notif">
+                <svg class="icon" width="64" height="64" viewBox="0 0 64 64"><g stroke="#e9c67b" stroke-width="5"><path d="M8 14 H56 V44 H26 L14 54 V44 H8 Z"/></g></svg>
+                <div style="text-align:left"><div style="font-weight:700;font-size:30px">New message</div><div style="font-size:26px;opacity:.7">just now</div></div>
+              </div>
+              <div id="s5-b1" class="bubble" style="top: 300px">Hey… you there?</div>
+              <div id="s5-b2" class="bubble" style="top: 430px">Wanna talk?</div>
+              <div class="inputbar"><span style="white-space:nowrap;font-size:28px">Type a message…</span>
+                <svg id="s5-x" class="icon" width="70" height="70" viewBox="0 0 70 70" style="margin-left:auto"><path class="xx" d="M12 12 L58 58 M58 12 L12 58" stroke="#e3242b" stroke-width="10" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+              </div>
+            </div>
+          </div>
+          <div id="s5-cap1" class="center" style="top: 1230px">
+            <span class="line"><span class="w"><span class="white" style="font-weight:700;font-size:74px;letter-spacing:.06em">WITHOUT A SINGLE TEXT</span></span></span>
+          </div>
+          <div id="s5-cap2" class="center" style="top: 1230px">
+            <span class="line"><span class="w"><span class="cinzel gold" style="font-size:80px">SHE COMES TO YOU</span></span></span>
+          </div>
+          <div id="s5-lockgrp" class="center" style="top: 520px">
+            <svg id="s5-lock" class="icon" width="300" height="380" viewBox="0 0 300 380">
+              <g stroke="#e9c67b" stroke-width="14">
+                <path id="s5-shackle" d="M80 170 V110 C80 30 220 30 220 110 V170"/>
+                <rect x="40" y="170" width="220" height="180" rx="28" style="fill:rgba(40,10,12,.9)"/>
+                <path d="M150 240 V285"/>
+              </g>
+            </svg>
+            <span class="line label" style="margin-top:60px;font-size:50px">SECRET</span>
+            <span class="line"><span class="w"><span class="cinzel white" style="font-size:96px">PSYCHOLOGICAL</span></span></span>
+            <span class="line"><span class="w"><span class="cinzel red" style="font-size:150px">TRICK</span></span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== S6 NOT FROM RANDOM VIDEOS 24.88–27.68 ===== -->
+      <section id="s6" class="scene clip" data-start="24.88" data-duration="2.80" data-track-index="1">
+        <div class="cam">
+          <div class="center" style="top: 520px">
+            <div style="position:relative">
+              <svg id="s6-play" class="icon" width="420" height="300" viewBox="0 0 420 300"><g stroke="rgba(246,239,228,.75)" stroke-width="12"><rect x="10" y="10" width="400" height="280" rx="60"/><path d="M170 95 L270 150 L170 205 Z" style="fill:rgba(246,239,228,.75)"/></g></svg>
+              <div id="s6-stamp" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center"><span class="cinzel" style="font-size:110px;color:#e3242b;border:10px solid #e3242b;border-radius:20px;padding:0 30px;background:rgba(5,3,4,.75)">NOT</span></div>
+            </div>
+            <span class="line" style="margin-top:90px"><span class="w"><span class="white" style="font-weight:700;font-size:56px;letter-spacing:.08em">NOT FROM RANDOM VIDEOS</span></span></span>
+            <span class="line" style="margin-top:20px"><span class="w"><span class="play-i gold" style="font-size:110px">Not guesswork.</span></span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== S7 RESEARCH / 5000+ / BOOK 27.68–34.20 ===== -->
+      <section id="s7" class="scene clip" data-start="27.68" data-duration="6.52" data-track-index="1">
+        <div class="cam">
+          <div id="s7-a" class="center" style="top: 600px">
+            <span class="line"><span id="s7-dark" class="cinzel gold" style="font-size:118px;display:inline-block">DARK</span></span>
+            <span class="line"><span id="s7-psy" class="cinzel white" style="font-size:104px;display:inline-block">PSYCHOLOGY</span></span>
+            <div id="s7-docs" style="position:relative;width:520px;height:320px;margin-top:70px">
+              <svg class="icon doc d1" width="200" height="260" viewBox="0 0 200 260" style="position:absolute;left:160px;top:20px"><g stroke="#e9c67b" stroke-width="7"><rect x="8" y="8" width="184" height="244" rx="18" style="fill:rgba(30,8,9,.95)"/><path d="M40 70 H160 M40 110 H160 M40 150 H130 M40 190 H150"/></g></svg>
+              <svg class="icon doc d2" width="200" height="260" viewBox="0 0 200 260" style="position:absolute;left:160px;top:20px"><g stroke="#e9c67b" stroke-width="7"><rect x="8" y="8" width="184" height="244" rx="18" style="fill:rgba(30,8,9,.95)"/><path d="M40 70 H160 M40 110 H120 M40 150 H160 M40 190 H110"/></g></svg>
+              <svg class="icon doc d3" width="200" height="260" viewBox="0 0 200 260" style="position:absolute;left:160px;top:20px"><g stroke="#e9c67b" stroke-width="7"><rect x="8" y="8" width="184" height="244" rx="18" style="fill:rgba(30,8,9,.95)"/><path d="M40 70 H160 M40 110 H160 M40 150 H160 M40 190 H130"/></g></svg>
+            </div>
+            <span class="line label" style="margin-top:40px">RESEARCH-BASED</span>
+          </div>
+          <div id="s7-b" class="center" style="top: 700px">
+            <span class="line"><span id="s7-num" class="cinzel gold" style="font-size:240px;display:inline-block">0+</span></span>
+            <span class="line"><span class="w"><span class="white" style="font-weight:700;font-size:64px;letter-spacing:.12em">LIVES CHANGED</span></span></span>
+          </div>
+          <div id="s7-c" class="center" style="top: 330px">
+            <div id="s7-book" class="book-wrap"><img class="book" src="assets/img/book.png" alt="The Dark Attraction book" /><div id="s7-sheen" class="sheen"></div></div>
+            <span class="line label" style="margin-top:70px;font-size:48px">PROVEN</span>
+            <span class="line"><span class="w"><span class="cinzel white" style="font-size:104px">MASTER SYSTEM</span></span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== S8 SECRET BONUS 34.20–36.36 ===== -->
+      <section id="s8" class="scene clip" data-start="34.20" data-duration="2.16" data-track-index="1">
+        <div class="cam">
+          <div class="center" style="top: 520px">
+            <div style="position:relative;width:420px;height:440px">
+              <div id="s8-sparks"></div>
+              <svg id="s8-box" class="icon" width="360" height="300" viewBox="0 0 360 300" style="position:absolute;left:30px;top:140px">
+                <g stroke="#e9c67b" stroke-width="10"><rect x="30" y="40" width="300" height="250" rx="16" style="fill:#4a0e12"/><path d="M180 40 V290"/></g>
+              </svg>
+              <svg id="s8-lid" class="icon" width="400" height="140" viewBox="0 0 400 140" style="position:absolute;left:10px;top:70px">
+                <g stroke="#e9c67b" stroke-width="10"><rect x="20" y="60" width="360" height="70" rx="14" style="fill:#6a141a"/><path d="M200 60 V130 M200 60 C160 0 110 20 140 55 M200 60 C240 0 290 20 260 55"/></g>
+              </svg>
+            </div>
+            <span class="line" style="margin-top:60px"><span id="s8-badge" class="cinzel" style="display:inline-block;font-size:92px;color:#1a0505;background:linear-gradient(180deg,#f6dc9c,#c8953e);padding:14px 50px;border-radius:24px">+ SECRET BONUS</span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== S9 STOP BEING A DOORMAT 36.36–39.16 ===== -->
+      <section id="s9" class="scene clip" data-start="36.36" data-duration="2.80" data-track-index="1">
+        <div class="cam">
+          <div class="center" style="top: 430px; flex-direction: row; justify-content: center; gap: 120px">
+            <div id="s9-heartwrap" style="position:relative">
+              <svg id="s9-heart" class="icon" width="300" height="280" viewBox="0 0 300 280"><path d="M150 255 C40 180 10 120 30 75 C55 20 125 25 150 80 C175 25 245 20 270 75 C290 120 260 180 150 255 Z" stroke="#e3242b" stroke-width="12" style="fill:rgba(227,36,43,.18)"/></svg>
+              <div class="xmark"><svg class="icon" width="300" height="300" viewBox="0 0 300 300"><path class="xx" d="M50 50 L250 250 M250 50 L50 250" stroke="#f6efe4" stroke-width="18" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg></div>
+            </div>
+            <svg id="s9-brain" class="icon" width="300" height="280" viewBox="0 0 420 360"><g stroke="#e9c67b" stroke-width="12"><path d="M205 40 C150 20 95 45 90 95 C45 105 30 160 60 195 C40 240 75 290 125 285 C140 320 190 330 205 300 Z M215 40 C270 20 325 45 330 95 C375 105 390 160 360 195 C380 240 345 290 295 285 C280 320 230 330 215 300 Z"/></g></svg>
+          </div>
+          <div id="s9-t1" class="center" style="top: 860px">
+            <span class="line"><span class="w"><span class="white" style="font-weight:700;font-size:70px;letter-spacing:.1em">STOP BEING A</span></span></span>
+            <span class="line"><span class="w"><span class="cinzel red" style="font-size:150px">DOORMAT</span></span></span>
+          </div>
+          <div id="s9-t2" class="center" style="top: 1180px">
+            <span class="line"><span id="s9-smart" class="play-i gold" style="font-size:150px;display:inline-block">Play it smart.</span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== S10 SHE SEES YOU DIFFERENTLY 39.16–41.54 ===== -->
+      <section id="s10" class="scene clip" data-start="39.16" data-duration="2.38" data-track-index="1">
+        <div class="cam">
+          <div class="photo-wrap"><img id="s10-img" src="assets/img/her.png" alt="" /></div>
+          <div class="shade-bottom"></div>
+          <div class="center" style="top: 1130px">
+            <span class="line"><span class="w"><span class="white" style="font-weight:700;font-size:70px;letter-spacing:.08em">THE WAY SHE SEES YOU</span></span></span>
+            <span class="line"><span id="s10-word" class="cinzel gold" style="font-size:150px;display:inline-block">CHANGES</span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== S11 CTA 41.54–48.72 ===== -->
+      <section id="s11" class="scene clip" data-start="41.54" data-duration="7.18" data-track-index="1">
+        <div class="cam">
+          <div id="s11-glow" class="layer" style="background: radial-gradient(60% 40% at 50% 34%, rgba(227,36,43,.45), rgba(227,36,43,0) 70%)"></div>
+          <div class="center" style="top: 250px">
+            <div id="s11-book" class="book-wrap" style="width:420px"><img class="book" style="width:420px" src="assets/img/book.png" alt="The Dark Attraction book" /><div id="s11-sheen" class="sheen"></div></div>
+            <span class="line" style="margin-top:44px;height:70px"><span id="s11-weapon" class="label" style="display:inline-block;font-size:46px">YOUR SECRET WEAPON</span></span>
+            <div id="s11-btnwrap" style="position:relative;margin-top:28px">
+              <div id="s11-btn" class="btn">
+                <svg class="icon" width="80" height="80" viewBox="0 0 80 80"><g stroke="#fff" stroke-width="9"><path d="M40 8 V50 M22 34 L40 52 L58 34 M12 68 H68"/></g></svg>
+                <span>DOWNLOAD NOW</span>
+                <div class="ripple" id="s11-ripple" style="left:92%"></div>
+              </div>
+              <svg id="s11-hand" class="icon" width="150" height="170" viewBox="0 0 150 170" style="position:absolute;right:-70px;top:90px">
+                <path d="M55 15 C55 0 80 0 80 15 V70 C80 60 105 60 105 72 C105 62 128 62 128 76 V120 C128 150 105 165 80 165 H70 C45 165 30 150 22 130 L8 95 C4 82 22 75 30 88 L55 120 Z" stroke="#1a0505" stroke-width="7" style="fill:#fff"/>
+              </svg>
+            </div>
+            <span class="line" style="margin-top:44px;height:70px"><span id="s11-gone" class="red" style="display:inline-block;font-weight:700;font-size:52px;letter-spacing:.14em">BEFORE IT'S GONE</span></span>
+            <div id="s11-badges" class="badges" style="margin-top:30px">
+              <div class="badge"><svg class="icon" width="54" height="54" viewBox="0 0 54 54"><g stroke="#e9c67b" stroke-width="4"><path d="M12 4 H34 L44 14 V50 H12 Z M18 24 H38 M18 32 H38 M18 40 H30"/></g></svg>Instant Digital Access</div>
+              <div class="badge"><svg class="icon" width="54" height="54" viewBox="0 0 54 54"><g stroke="#e9c67b" stroke-width="4"><path d="M8 44 H20 V32 H32 V20 H46"/></g></svg>Step-by-Step Guide</div>
+              <div class="badge"><svg class="icon" width="54" height="54" viewBox="0 0 54 54"><g stroke="#e9c67b" stroke-width="4"><path d="M26 6 C14 6 8 14 9 22 C4 26 5 36 12 38 C12 46 20 50 26 46 Z M28 6 C40 6 46 14 45 22 C50 26 49 36 42 38 C42 46 34 50 28 46 Z"/></g></svg>Based on Psychology</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== overlays ===== -->
+      <div id="fx" class="clip layer" data-start="0" data-duration="48.72" data-track-index="5" style="pointer-events:none">
+        <div id="vignette" class="layer"></div>
+        <div id="grain" class="layer"></div>
+        <div id="flash" class="layer"></div>
+        <div id="end-black" class="layer"></div>
+      </div>
+
+      <!-- ===== audio ===== -->
+      <audio id="vo" src="assets/audio/vo.mp3" data-start="0" data-duration="48.66" data-track-index="10" data-volume="1"></audio>
+      <audio id="sfx-boom-1" src="assets/sfx/boom.wav" data-start="0.05" data-duration="1.4" data-track-index="11" data-volume="0.55"></audio>
+      <audio id="sfx-boom-2" src="assets/sfx/boom.wav" data-start="4.84" data-duration="1.4" data-track-index="11" data-volume="0.55"></audio>
+      <audio id="sfx-boom-3" src="assets/sfx/boom.wav" data-start="8.46" data-duration="1.4" data-track-index="11" data-volume="0.45"></audio>
+      <audio id="sfx-boom-4" src="assets/sfx/boom.wav" data-start="12.44" data-duration="1.4" data-track-index="11" data-volume="0.45"></audio>
+      <audio id="sfx-boom-5" src="assets/sfx/boom.wav" data-start="17.38" data-duration="1.4" data-track-index="11" data-volume="0.45"></audio>
+      <audio id="sfx-boom-6" src="assets/sfx/boom.wav" data-start="30.08" data-duration="1.4" data-track-index="11" data-volume="0.45"></audio>
+      <audio id="sfx-boom-7" src="assets/sfx/boom.wav" data-start="32.50" data-duration="1.4" data-track-index="11" data-volume="0.55"></audio>
+      <audio id="sfx-boom-8" src="assets/sfx/boom.wav" data-start="41.56" data-duration="1.4" data-track-index="11" data-volume="0.55"></audio>
+      <audio id="sfx-wh-1" src="assets/sfx/whoosh.wav" data-start="5.30" data-duration="0.7" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sfx-wh-2" src="assets/sfx/whoosh.wav" data-start="8.98" data-duration="0.7" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sfx-wh-3" src="assets/sfx/whoosh.wav" data-start="14.10" data-duration="0.7" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sfx-wh-4" src="assets/sfx/whoosh.wav" data-start="19.14" data-duration="0.7" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sfx-wh-5" src="assets/sfx/whoosh.wav" data-start="24.56" data-duration="0.7" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sfx-wh-6" src="assets/sfx/whoosh.wav" data-start="27.36" data-duration="0.7" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sfx-wh-7" src="assets/sfx/whoosh.wav" data-start="33.88" data-duration="0.7" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sfx-wh-8" src="assets/sfx/whoosh.wav" data-start="36.04" data-duration="0.7" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sfx-wh-9" src="assets/sfx/whoosh.wav" data-start="38.84" data-duration="0.7" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sfx-sh-1" src="assets/sfx/shimmer.wav" data-start="32.90" data-duration="1.2" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sfx-sh-2" src="assets/sfx/shimmer.wav" data-start="35.08" data-duration="1.2" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sfx-sh-3" src="assets/sfx/shimmer.wav" data-start="44.08" data-duration="1.2" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sfx-pop-1" src="assets/sfx/pop.wav" data-start="10.00" data-duration="0.11" data-track-index="14" data-volume="0.4"></audio>
+      <audio id="sfx-pop-2" src="assets/sfx/pop.wav" data-start="10.62" data-duration="0.11" data-track-index="14" data-volume="0.4"></audio>
+      <audio id="sfx-pop-3" src="assets/sfx/pop.wav" data-start="21.60" data-duration="0.11" data-track-index="14" data-volume="0.4"></audio>
+      <audio id="sfx-pop-4" src="assets/sfx/pop.wav" data-start="22.10" data-duration="0.11" data-track-index="14" data-volume="0.4"></audio>
+      <audio id="sfx-pop-5" src="assets/sfx/pop.wav" data-start="34.30" data-duration="0.11" data-track-index="14" data-volume="0.4"></audio>
+      <audio id="sfx-pop-6" src="assets/sfx/pop.wav" data-start="43.12" data-duration="0.11" data-track-index="14" data-volume="0.5"></audio>
+      <audio id="sfx-rs-1" src="assets/sfx/riser.wav" data-start="30.90" data-duration="1.6" data-track-index="15" data-volume="0.25"></audio>
+      <audio id="sfx-rs-2" src="assets/sfx/riser.wav" data-start="39.96" data-duration="1.6" data-track-index="15" data-volume="0.25"></audio>
+    </div>
+
+    <script>
+      // Deterministic pseudo-random for decorative layout.
+      const hash = (n) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+      const DUR = 48.72;
+
+      // Bokeh particles (built before the timeline, positions seeded).
+      const bokeh = document.getElementById("bokeh");
+      for (let i = 0; i < 34; i++) {
+        const d = document.createElement("div");
+        const s = 30 + hash(i) * 120;
+        d.className = "dot";
+        d.style.width = s + "px"; d.style.height = s + "px";
+        d.style.left = (hash(i + 50) * 1080 - s / 2) + "px";
+        d.style.top = (hash(i + 90) * 2100 - 100) + "px";
+        bokeh.appendChild(d);
+      }
+      // Gold sparks for the bonus burst.
+      const sparks = document.getElementById("s8-sparks");
+      for (let i = 0; i < 26; i++) { const p = document.createElement("div"); p.className = "spark"; sparks.appendChild(p); }
+
+      const tl = gsap.timeline({ paused: true });
+      // Only the first fromTo per target renders its "from" state up front; later ones wait for their slot.
+      const seen = new Set();
+      function ft(target, from, to, pos) {
+        const key = typeof target === "string" ? target : target;
+        const extra = seen.has(key) ? { immediateRender: false } : {};
+        seen.add(key);
+        return tl.fromTo(target, from, { ...to, ...extra }, pos);
+      }
+
+      // ---------- helpers ----------
+      const ir = { immediateRender: false };
+      function enter(scene, t) {
+        ft(scene + " > .cam", { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.42, ease: "power3.out" }, t);
+      }
+      function leave(scene, t) {
+        ft(scene + " > .cam", { opacity: 1 }, { opacity: 0, duration: 0.28, ease: "power2.in", ...ir }, t - 0.28);
+      }
+      // words rising out of a mask, staggered
+      function rise(sel, t, stagger = 0.08) {
+        ft(sel + " .w > span", { yPercent: 115 }, { yPercent: 0, duration: 0.55, ease: "expo.out", stagger }, t);
+      }
+      function slam(sel, t, from = 2.4) {
+        ft(sel, { scale: from, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.38, ease: "expo.out" }, t);
+        flash(t, 0.32);
+      }
+      function flash(t, a = 0.3) {
+        ft("#flash", { opacity: a }, { opacity: 0, duration: 0.35, ease: "power2.out", ...ir }, t);
+      }
+      function leak(t) {
+        ft("#leak", { opacity: 0, xPercent: -40 }, { opacity: 1, xPercent: 0, duration: 0.3, ease: "power2.out", ...ir }, t);
+        ft("#leak", { opacity: 1 }, { opacity: 0, duration: 0.6, ease: "power2.in", ...ir }, t + 0.3);
+      }
+      function draw(sel, t, d = 0.7, stagger = 0.12) {
+        ft(sel, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: d, ease: "power2.inOut", stagger }, t);
+      }
+      function fadeOut(sel, t, d = 0.25) {
+        ft(sel, { opacity: 1 }, { opacity: 0, duration: d, ease: "power2.in", ...ir }, t);
+      }
+      function fadeIn(sel, t, d = 0.3) {
+        ft(sel, { opacity: 0 }, { opacity: 1, duration: d, ease: "power2.out" }, t);
+      }
+      function counter(el, t, to, d, suffix) {
+        const o = { v: 0 };
+        ft(o, { v: 0 }, { v: to, duration: d, ease: "power2.out",
+          onUpdate: () => { el.textContent = Math.round(o.v).toLocaleString("en-IN") + suffix; } }, t);
+      }
+
+      // ---------- shared background motion ----------
+      document.querySelectorAll("#bokeh .dot").forEach((d, i) => {
+        ft(d, { y: 0, opacity: 0.15 + hash(i + 7) * 0.35 }, { y: -(180 + hash(i + 3) * 420), duration: DUR, ease: "none" }, 0);
+        ft(d, { scale: 0.8 }, { scale: 1.25, duration: 2 + hash(i + 11) * 2, ease: "sine.inOut", repeat: 12, yoyo: true }, 0);
+      });
+      ft("#grain", { backgroundPosition: "0px 0px" }, { backgroundPosition: "2560px 1792px", duration: DUR, ease: "steps(1170)" }, 0);
+      ft("#bg", { scale: 1 }, { scale: 1.15, duration: DUR, ease: "none" }, 0);
+
+      // ---------- S1 hook ----------
+      ft("#s1-img", { scale: 1.18 }, { scale: 1.02, duration: 5.62, ease: "power1.out" }, 0);
+      ft("#s1 > .cam", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 0);
+      flash(0.02, 0.5);
+      rise("#s1-top", 0.30, 0.9);
+      ft("#s1-crazy", { scale: 1.6, filter: "blur(10px)" }, { scale: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, 2.04);
+      fadeOut("#s1-top", 2.95);
+      ft("#s1-love", { opacity: 0 }, { opacity: 1, duration: 0.01 }, 3.15);
+      ft("#s1-loveword", { scale: 1.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, 3.18);
+      draw("#s1-strike path", 3.62, 0.22);
+      ft("#s1-love", { x: 0 }, { x: 900, duration: 0.45, ease: "power3.in" }, 3.95);
+      ft("#s1-mind", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 4.45);
+      slam("#s1-mindword", 4.84);
+      ft("#s1-mindword", { scale: 1 }, { scale: 1.04, duration: 0.8, ease: "power2.out" }, 4.9);
+      leave("#s1", 5.62);
+
+      // ---------- S2 not luck ----------
+      enter("#s2", 5.62);
+      leak(5.62);
+      ft("#s2-mind", { opacity: 0 }, { opacity: 0, duration: 0.01 }, 5.62);
+      ft("#s2-luck .label", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 5.70);
+      ft("#s2-luck .cinzel", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.8)" }, 6.75);
+      draw("#s2-slash", 7.40, 0.25);
+      flash(7.55, 0.2);
+      fadeOut("#s2-luck", 7.85);
+      ft("#s2-mind", { opacity: 0 }, { opacity: 1, duration: 0.2, ...ir }, 7.85);
+      draw("#s2-king .draw", 7.85, 0.75);
+      ft("#s2-mind .label", { opacity: 0, scaleX: 1.45 }, { opacity: 1, scaleX: 1, duration: 0.5, ease: "power3.out" }, 8.14);
+      slam("#s2-word", 8.46, 1.8);
+      leave("#s2", 9.30);
+
+      // ---------- S3 gym / money -> psychology ----------
+      enter("#s3", 9.30);
+      ft("#s3-psy", { opacity: 0 }, { opacity: 0, duration: 0.01 }, 9.30);
+      rise("#s3-title", 9.32, 0.15);
+      ft("#s3-gym", { y: 160, opacity: 0, rotation: -6 }, { y: 0, opacity: 1, rotation: -3, duration: 0.5, ease: "back.out(1.6)" }, 9.88);
+      ft("#s3-money", { y: 160, opacity: 0, rotation: 6 }, { y: 0, opacity: 1, rotation: 3, duration: 0.5, ease: "back.out(1.6)" }, 10.55);
+      draw("#s3-gym .xx", 11.02, 0.22);
+      draw("#s3-money .xx", 11.14, 0.22);
+      flash(11.1, 0.18);
+      ft("#s3-cards", { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.85, duration: 0.3, ease: "power2.in", ...ir }, 11.60);
+      fadeOut("#s3-title", 11.60);
+      ft("#s3-psy", { opacity: 0 }, { opacity: 1, duration: 0.2, ...ir }, 11.80);
+      draw("#s3-brain .draw", 11.80, 0.8, 0.15);
+      slam("#s3-word", 12.44, 1.7);
+      ft("#s3-hack", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.25, ease: "expo.out" }, 13.18);
+      ft("#s3-hack .g1", { x: -14 }, { x: 10, duration: 0.06, ease: "steps(1)", repeat: 13, yoyo: true }, 13.18);
+      ft("#s3-hack .g2", { x: 12 }, { x: -9, duration: 0.07, ease: "steps(1)", repeat: 11, yoyo: true }, 13.18);
+      flash(13.2, 0.22);
+      leave("#s3", 14.42);
+
+      // ---------- S4 hidden signals ----------
+      enter("#s4", 14.42);
+      leak(14.42);
+      ft("#s4-img", { scale: 1.25 }, { scale: 1.05, duration: 5.04, ease: "none" }, 14.42);
+      ft("#s4-stat", { opacity: 0 }, { opacity: 0, duration: 0.01 }, 14.42);
+      draw("#s4-eye .draw", 14.55, 0.7, 0.2);
+      ft("#s4-pupil", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.4, ease: "back.out(3)" }, 15.1);
+      ["r1", "r2", "r3"].forEach((r, i) => {
+        ft("#s4 ." + r, { scale: 0.45, opacity: 0.9 }, { scale: 1.9, opacity: 0, duration: 1.5, ease: "power1.out", repeat: 2 }, 15.0 + i * 0.5);
+      });
+      rise("#s4-text", 15.84, 0.3);
+      fadeOut("#s4-text", 17.15);
+      ft("#s4-stat", { opacity: 0 }, { opacity: 1, duration: 0.15, ...ir }, 17.30);
+      slam("#s4-num", 17.38, 1.6);
+      counter(document.getElementById("s4-num"), 17.38, 90, 0.7, "%");
+      rise("#s4-stat", 17.94, 0.1);
+      ft("#s4-eye", { scaleY: 1, transformOrigin: "50% 50%" }, { scaleY: 0.08, duration: 0.12, ease: "power2.in", repeat: 1, yoyo: true }, 18.80);
+      leave("#s4", 19.46);
+
+      // ---------- S5 no text -> she comes -> secret trick ----------
+      enter("#s5", 19.46);
+      ["#s5-cap2", "#s5-lockgrp", "#s5-notif", "#s5-b1", "#s5-b2"].forEach((s) => ft(s, { opacity: 0 }, { opacity: 0, duration: 0.01 }, 19.46));
+      ft("#s5-phonegrp", { y: 120 }, { y: 0, duration: 0.6, ease: "power3.out" }, 19.46);
+      rise("#s5-cap1", 19.55, 0.1);
+      draw("#s5-x .xx", 20.30, 0.25);
+      fadeOut("#s5-cap1", 21.00);
+      ft("#s5-notif", { opacity: 0, y: -160 }, { opacity: 1, y: 0, duration: 0.45, ease: "back.out(1.6)", ...ir }, 21.14);
+      ft("#s5-b1", { opacity: 0, scale: 0.6, transformOrigin: "0% 100%" }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)", ...ir }, 21.60);
+      ft("#s5-b2", { opacity: 0, scale: 0.6, transformOrigin: "0% 100%" }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)", ...ir }, 22.10);
+      ft("#s5-cap2", { opacity: 0 }, { opacity: 1, duration: 0.01, ...ir }, 21.30);
+      rise("#s5-cap2", 21.30, 0.06);
+      ft("#s5-phonegrp", { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.8, duration: 0.3, ease: "power2.in", ...ir }, 22.55);
+      fadeOut("#s5-cap2", 22.55);
+      ft("#s5-lockgrp", { opacity: 0 }, { opacity: 1, duration: 0.2, ...ir }, 22.80);
+      ft("#s5-lock", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 22.80);
+      ft("#s5-lockgrp .label", { opacity: 0, scaleX: 1.45 }, { opacity: 1, scaleX: 1, duration: 0.45, ease: "power3.out" }, 23.20);
+      rise("#s5-lockgrp", 23.54, 0.35);
+      ft("#s5-shackle", { y: 0 }, { y: -50, duration: 0.3, ease: "back.out(3)" }, 24.22);
+      flash(24.25, 0.22);
+      leave("#s5", 24.88);
+
+      // ---------- S6 not from random videos ----------
+      enter("#s6", 24.88);
+      ft("#s6-play", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.8)" }, 24.95);
+      rise("#s6", 25.30, 0.4);
+      ft("#s6-stamp", { scale: 3, opacity: 0, rotation: -18 }, { scale: 1, opacity: 1, rotation: -10, duration: 0.3, ease: "expo.out" }, 26.46);
+      flash(26.5, 0.25);
+      leave("#s6", 27.68);
+
+      // ---------- S7 research / 5000+ / book ----------
+      enter("#s7", 27.68);
+      leak(27.68);
+      ["#s7-b", "#s7-c"].forEach((s) => ft(s, { opacity: 0 }, { opacity: 0, duration: 0.01 }, 27.68));
+      ft("#s7-dark", { opacity: 0, scaleX: 1.45 }, { opacity: 1, scaleX: 1, duration: 0.7, ease: "power3.out" }, 27.70);
+      ft("#s7-psy", { opacity: 0, scaleX: 1.45 }, { opacity: 1, scaleX: 1, duration: 0.7, ease: "power3.out" }, 27.96);
+      ft("#s7-docs .d1", { x: 0, rotation: 0, opacity: 0 }, { x: -170, rotation: -12, opacity: 1, duration: 0.5, ease: "back.out(1.6)" }, 28.66);
+      ft("#s7-docs .d3", { x: 0, rotation: 0, opacity: 0 }, { x: 170, rotation: 12, opacity: 1, duration: 0.5, ease: "back.out(1.6)" }, 28.76);
+      ft("#s7-docs .d2", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "back.out(1.6)" }, 28.86);
+      ft("#s7-a .label", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 29.06);
+      fadeOut("#s7-a", 29.85);
+      ft("#s7-b", { opacity: 0 }, { opacity: 1, duration: 0.15, ...ir }, 30.00);
+      slam("#s7-num", 30.08, 1.6);
+      counter(document.getElementById("s7-num"), 30.08, 5000, 0.9, "+");
+      rise("#s7-b", 31.10, 0.1);
+      fadeOut("#s7-b", 32.20);
+      ft("#s7-c", { opacity: 0 }, { opacity: 1, duration: 0.2, ...ir }, 32.42);
+      ft("#s7-book", { y: 260, scale: 0.8, rotationY: -25, opacity: 0 }, { y: 0, scale: 1, rotationY: 0, opacity: 1, duration: 0.7, ease: "expo.out" }, 32.42);
+      flash(32.5, 0.35);
+      ft("#s7-sheen", { x: -200 }, { x: 560, duration: 0.8, ease: "power2.inOut" }, 32.90);
+      ft("#s7-c .label", { opacity: 0, scaleX: 1.45 }, { opacity: 1, scaleX: 1, duration: 0.45 }, 32.72);
+      rise("#s7-c", 33.06, 0.1);
+      leave("#s7", 34.20);
+
+      // ---------- S8 secret bonus ----------
+      enter("#s8", 34.20);
+      ft("#s8-box", { scale: 0, transformOrigin: "50% 100%" }, { scale: 1, duration: 0.4, ease: "back.out(2.2)" }, 34.28);
+      ft("#s8-lid", { scale: 0, transformOrigin: "50% 100%" }, { scale: 1, duration: 0.4, ease: "back.out(2.2)" }, 34.34);
+      ft("#s8-lid", { y: 0, rotation: 0 }, { y: -170, rotation: -16, duration: 0.45, ease: "back.out(2)", ...ir }, 35.05);
+      document.querySelectorAll("#s8-sparks .spark").forEach((p, i) => {
+        const a = (i / 26) * Math.PI * 2, r = 220 + hash(i + 31) * 200;
+        ft(p, { x: 0, y: 120, scale: 0.4, opacity: 1 }, { x: Math.cos(a) * r, y: 120 + Math.sin(a) * r - 80, scale: 1.4, opacity: 0, duration: 1.0, ease: "power3.out" }, 35.08);
+      });
+      flash(35.08, 0.3);
+      ft("#s8-badge", { scale: 0, rotation: -8 }, { scale: 1, rotation: 0, duration: 0.45, ease: "back.out(2.4)" }, 35.10);
+      leave("#s8", 36.36);
+
+      // ---------- S9 stop being a doormat ----------
+      enter("#s9", 36.36);
+      ft("#s9-t2", { opacity: 0 }, { opacity: 0, duration: 0.01 }, 36.36);
+      ft("#s9-heart", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2)" }, 36.45);
+      ft("#s9-heart", { scale: 1 }, { scale: 1.12, duration: 0.15, ease: "sine.inOut", repeat: 3, yoyo: true, ...ir }, 36.80);
+      draw("#s9 .xx", 37.00, 0.22);
+      rise("#s9-t1", 36.84, 0.12);
+      ft("#s9-brain", { opacity: 0.15, scale: 0.85 }, { opacity: 1, scale: 1.08, duration: 0.4, ease: "back.out(2)" }, 38.10);
+      fadeOut("#s9-heartwrap", 38.10, 0.3);
+      ft("#s9-t2", { opacity: 0 }, { opacity: 1, duration: 0.01, ...ir }, 38.55);
+      slam("#s9-smart", 38.60, 1.7);
+      leave("#s9", 39.16);
+
+      // ---------- S10 she sees you differently ----------
+      enter("#s10", 39.16);
+      leak(39.16);
+      ft("#s10-img", { scale: 1.05, y: 0 }, { scale: 1.3, y: 120, duration: 2.38, ease: "power1.inOut" }, 39.16);
+      rise("#s10", 39.22, 0.08);
+      slam("#s10-word", 40.76, 1.6);
+      leave("#s10", 41.54);
+
+      // ---------- S11 CTA ----------
+      enter("#s11", 41.54);
+      flash(41.56, 0.45);
+      ["#s11-weapon", "#s11-gone", "#s11-hand", "#s11-ripple"].forEach((s) => ft(s, { opacity: 0 }, { opacity: 0, duration: 0.01 }, 41.54));
+      ft("#s11-book", { y: -200, opacity: 0, scale: 0.85 }, { y: 0, opacity: 1, scale: 1, duration: 0.7, ease: "expo.out" }, 41.56);
+      ft("#s11-book", { y: 0 }, { y: -18, duration: 1.1, ease: "sine.inOut", repeat: 5, yoyo: true, ...ir }, 42.26);
+      ft("#s11-glow", { opacity: 0.6 }, { opacity: 1, duration: 0.9, ease: "sine.inOut", repeat: 7, yoyo: true }, 41.6);
+      ft("#s11-btn", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2)" }, 42.20);
+      ft("#s11-btn", { scale: 1 }, { scale: 1.05, duration: 0.45, ease: "sine.inOut", repeat: 11, yoyo: true, ...ir }, 43.40);
+      ft("#s11-hand", { opacity: 0, x: 120, y: 120 }, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: "power3.out", ...ir }, 42.60);
+      ft("#s11-hand", { scale: 1 }, { scale: 0.86, duration: 0.1, ease: "power2.in", repeat: 1, yoyo: true, ...ir }, 43.08);
+      ft("#s11-ripple", { opacity: 0.9, scale: 0.3 }, { opacity: 0, scale: 6, duration: 0.7, ease: "power2.out", ...ir }, 43.12);
+      ft("#s11-ripple", { opacity: 0.9, scale: 0.3 }, { opacity: 0, scale: 6, duration: 0.7, ease: "power2.out", ...ir }, 46.30);
+      flash(43.14, 0.2);
+      ft("#s11-weapon", { opacity: 0, scaleX: 1.45 }, { opacity: 1, scaleX: 1, duration: 0.6, ease: "power3.out", ...ir }, 44.08);
+      ft("#s11-sheen", { x: -200 }, { x: 520, duration: 0.8, ease: "power2.inOut" }, 44.10);
+      ft("#s11-badges .badge", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "back.out(1.6)", stagger: 0.12 }, 44.60);
+      ft("#s11-gone", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: "expo.out", ...ir }, 45.74);
+      ft("#s11-gone", { opacity: 1 }, { opacity: 0.45, duration: 0.3, ease: "steps(1)", repeat: 5, yoyo: true, ...ir }, 46.30);
+      ft("#end-black", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power2.in" }, 48.27);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
